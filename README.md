@@ -166,3 +166,22 @@ Connecting to host 10.10.10.1, port 5201
 iperf Done.
 
 ```
+RAS
+```
+[vagrant@client ~]$ ping -c 4 10.10.10.1
+PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
+64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=1.10 ms
+64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=1.00 ms
+64 bytes from 10.10.10.1: icmp_seq=3 ttl=64 time=1.01 ms
+64 bytes from 10.10.10.1: icmp_seq=4 ttl=64 time=1.02 ms
+
+--- 10.10.10.1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 1.002/1.032/1.095/0.043 ms
+[vagrant@client ~]$ ip r
+default via 10.0.2.2 dev eth0 proto dhcp metric 101 
+10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15 metric 101 
+10.10.10.0/24 via 10.10.10.5 dev tun0 
+10.10.10.5 dev tun0 proto kernel scope link src 10.10.10.6 
+192.168.56.0/24 dev eth1 proto kernel scope link src 192.168.56.20 metric 100
+```
