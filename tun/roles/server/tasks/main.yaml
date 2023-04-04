@@ -1,0 +1,41 @@
+---
+- name: Install epel-release
+  yum:
+    name:
+    - epel-release
+
+# Install packets
+- name: install base tools
+  package:
+    name:
+#    - epel-release
+    - openvpn
+    - iperf3
+    state: present
+
+# Copy server.conf file
+- name: copy server conf file 
+  copy:
+    src: server.conf
+    dest: /etc/openvpn/server.conf
+
+# Copy openvpn service file
+- name: copy openvpn service file 
+  copy:
+    src: openvpn.service
+    dest: /etc/systemd/system/openvpn@.service
+
+# Copy key file
+- name: copy key file 
+  copy:
+    src: static.key
+    dest: /etc/openvpn/static.key
+
+# Start and enable openvpn service
+- name: start openvpn service
+  systemd:
+    name: openvpn@server
+    state: started
+    enabled: true
+
+...

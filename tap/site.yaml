@@ -1,0 +1,17 @@
+---
+- name: install server
+  # Which VM we config
+  hosts: server
+  # Become root user
+  become: yes
+  roles:
+  - server
+ 
+- name: install client
+  # Which VM we config
+  hosts: client
+  # Become root user
+  become: yes
+  roles:
+  - client
+...
