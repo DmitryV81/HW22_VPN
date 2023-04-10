@@ -2,12 +2,6 @@
 
 Задание:
 
-Для выполнения домашнего задания используйте методичку:
-
-https://drive.google.com/file/d/17b-DlGINS1EWyaXlHvG6z7tolPZrPAYq/view?usp=share_link
-
-Что нужно сделать?
-
 Между двумя виртуалками поднять vpn в режимах
 
 tun;
