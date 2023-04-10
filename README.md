@@ -20,7 +20,45 @@ tap;
 
 Ход работы.
 
+Отличие tun от tap: аботают на разных уровнях- tap на L2, tun на L3. Tun - поддерживает маршрутизацию
+
+В работе использовал ранее сгенерированные сертификаты.
+Команды для генерации:
+
+Для tun и tap:
+
+openvpn --genkey --secret /etc/openvpn/static.key
+
+Для RAS:
+
+Серверные сертификаты и ключи:
+
+echo 'rasvpn' | /usr/share/easy-rsa/3.0.8/easyrsa build-ca nopass
+
+echo 'rasvpn' | /usr/share/easy-rsa/3.0.8/easyrsa gen-req server nopass
+
+echo 'yes' | /usr/share/easy-rsa/3.0.8/easyrsa sign-req server server
+
+/usr/share/easy-rsa/3.0.8/easyrsa gen-dh
+
+openvpn --genkey --secret ca.key
+
+Клиентские:
+
+echo 'client' | /usr/share/easy-rsa/3/easyrsa gen-req client nopass
+
+echo 'yes' | /usr/share/easy-rsa/3/easyrsa sign-req client client
+
+
 Для выполнения работы используем ansible.
+
+Задания расположены каждое в своём каталоге: tap, tun, ras.
+
+По отдельности переходим в каждый из каталогов и выполняем vagrant up.
+
+После того как поднимутся виртуальные машины выполняем ansible-playbook -i hosts site.yaml
+
+Ниже результаты тестов.
 
 TAP
 
@@ -106,6 +144,7 @@ iperf Done.
 ```
 
 TUN
+
 Server:
 ```
 [vagrant@server ~]$ sudo -i
@@ -189,7 +228,9 @@ Connecting to host 10.10.10.1, port 5201
 iperf Done.
 
 ```
+
 RAS
+
 ```
 [vagrant@client ~]$ ping -c 4 10.10.10.1
 PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
